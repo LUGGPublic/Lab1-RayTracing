@@ -94,24 +94,31 @@ int main() {
                     (float)imageWidth / (float)imageHeight);
     camera.setup(imageWidth, imageHeight);
 
-    // Ray Trace pixels
+    // Ray trace pixels
     int depth = 3;
-    std::cout << "Rendering\n";
+    std::cout << "Rendering...\n";
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
             Color pixel;
-            // trace pixel
+            // Get center of pixel coordinate
             float cx = ((float)i) + 0.5f;
             float cy = ((float)j) + 0.5f;
 
+            // Get a ray and trace it
             swRay r = camera.getRay(cx, cy);
             pixel = traceRay(r, scene, depth);
 
+            // Write pixel value to image
             writeColor((j * imageWidth + i) * numChannels, pixel, pixels);
         }
     }
+
+    // Save image to file
     stbi_write_png("out.png", imageWidth, imageHeight, numChannels, pixels,
                    imageWidth * numChannels);
+    
+    // Free allocated memory
     delete[] pixels;
-    std::cout << "Done.\n";
+
+    std::cout << "Done\n";
 }
