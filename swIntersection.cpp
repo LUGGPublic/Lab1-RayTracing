@@ -1,7 +1,8 @@
 #include "swIntersection.h"
 
-swRay swIntersection::getShadowRay(const swVec3 &L) {
-    return swRay(mPosition, L, 0.0f, 0.01f, FLT_MAX);
+swRay swIntersection::getShadowRay(const swVec3 &lightPos) {
+    swVec3 L = lightPos - mPosition;
+    return swRay(mPosition, L.normalize(), 0.0f, 0.01f, sqrt(L * L));
 }
 
 swRay swIntersection::getReflectedRay(void) {
@@ -23,7 +24,7 @@ swRay swIntersection::getRefractedRay(void) {
     float eta = 1.0f / mMaterial.refractiveIndex;
     if (!mFrontFacing) eta = 1.0f / eta; // Inside material.
 
-    // TODO: Implement reflection.
+    // TODO: Implement refraction.
     // -------------------
     swVec3 R = D;
     // -------------------

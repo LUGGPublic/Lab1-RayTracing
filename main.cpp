@@ -39,7 +39,7 @@ float uniform() {
     return dis(gen);
 }
 
-void WriteColor(int index, swVec3 p, uint8_t *pixels) {
+void writeColor(int index, swVec3 p, uint8_t *pixels) {
     // gamma correct for gamma=2.2, x^(1/gamma), more see :
     // https://www.geeks3d.com/20101001/tutorial-gamma-correction-a-story-of-linearity/
     for (int n = 0; n < 3; n++) {
@@ -55,8 +55,8 @@ Color traceRay(const swRay &r, swScene scene, int depth) {
     swIntersection hp, si;
     if (!scene.intersect(r, hp)) return Color(0, 0, 0); // Background color
 
-    const swVec3 gLightPos(20, 240, -7);
-    swVec3 lightDir = gLightPos - hp.mPosition;
+    const swVec3 lightPos(0.0f, 30.0f, -5.0f);
+    swVec3 lightDir = lightPos - hp.mPosition;
     lightDir.normalize();
 
     c = Color(1, 1, 1);
@@ -107,7 +107,7 @@ int main() {
             swRay r = camera.getRay(cx, cy);
             pixel = traceRay(r, scene, depth);
 
-            WriteColor((j * imageWidth + i) * numChannels, pixel, pixels);
+            writeColor((j * imageWidth + i) * numChannels, pixel, pixels);
         }
     }
     stbi_write_png("out.png", imageWidth, imageHeight, numChannels, pixels,
