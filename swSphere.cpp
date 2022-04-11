@@ -14,13 +14,11 @@ bool swSphere::intersect(const swRay &r, swIntersection &isect) {
     swVec3 d = r.dir; // - sphere.mCenter;
 
     // Compute polynom coefficients.
-    float A = d[0] * d[0] + d[1] * d[1] + d[2] * d[2]; // d dot d ?
-    float B =
-      2.0f * (d[0] * o[0] + d[1] * o[1] + d[2] * o[2]); // isn't this d dot o ?
-    float C = o[0] * o[0] + o[1] * o[1] + o[2] * o[2] -
-              mRadius * mRadius; // and o dot o ?
+    float A = d * d;
+    float B = 2.0f * d * o;
+    float C = o * o - mRadius * mRadius;
 
-    // Solve quadratic equation for ray enter/exit point t0,t1 respectively.
+    // Solve quadratic equation for ray enter/exit point t0, t1 respectively.
     float t0, t1;
     if (!solveQuadratic(A, B, C, t0, t1))
         return false; // no real solutions -> ray missed
