@@ -70,26 +70,41 @@ int main() {
     const int numChannels = 3;
     uint8_t *pixels = new uint8_t[imageWidth * imageHeight * numChannels];
 
+    // Define materials
+    // swMaterial(swVec3 color, reflectivity, refractivity, refractiveIndex)
+    swMaterial whiteDiffuse = swMaterial(Color(0.9f, 0.9f, 0.9f), 0.0f, 0.0f, 1.0f);
+    swMaterial greenDiffuse = swMaterial(Color(0.1f, 0.6f, 0.1f), 0.0f, 0.0f, 1.0f);
+    swMaterial redDiffuse = swMaterial(Color(1.0f, 0.1f, 0.1f), 0.0f, 0.0f, 1.0f);
+    swMaterial blueDiffuse = swMaterial(Color(0.0f, 0.2f, 0.9f), 0.0f, 0.0f, 1.0f);
+    swMaterial yellowReflective = swMaterial(Color(1.0f, 0.6f, 0.1f), 0.2f, 0.0f, 1.0f);
+    swMaterial redTransparent = swMaterial(Color(1.0f, 0.1f, 0.2f), 0.2f, 0.8f, 1.3f);
+
     // Setup scene
     swScene scene;
-    swMaterial mat[4];
-    // swMaterial(swVec3 color, reflectivity, refractivity, refractiveIndex)
-    mat[0] = swMaterial(swVec3(0.0f, 0.2f, 0.9f), 0.0f, 0.7f, 1.01f);
-    mat[1] = swMaterial(swVec3(1.0f, 0.3f, 0.2f), 0.7f, 0.0f, 1.00f);
-    mat[2] = swMaterial(swVec3(0.0f, 0.7f, 0.1f), 0.3f, 0.3f, 1.20f);
-    mat[3] = swMaterial(swVec3(0.6f, 0.6f, 0.6f), 0.5f, 0.0f, 1.00f);
-    for (int i = 0; i < 2 * 2 * 2; i++) {
-        scene.push(swSphere(swVec3((float)(-6 + 12 * (i & 1)),
-                                   (float)(-6 + 12 * ((i >> 1) & 1)),
-                                   (float)(-6 + 12 * ((i >> 2) & 1))),
-                            3.5, mat[i % 3]));
-    }
-    scene.push(swSphere(swVec3(0, -210, 0), 200, mat[3]));
+
+    scene.push(swSphere(swVec3(-7.0f, 3.0f, -20.0f), 3.0f, greenDiffuse));
+    scene.push(swSphere(swVec3(0.0f, 3.0f, -20.0f), 3.0f, blueDiffuse));
+    scene.push(swSphere(swVec3(7.0f, 3.0f, -20.0f), 3.0f, redDiffuse));
+
+    // TODO: Uncomment to render Cornell box
+    // scene.push(swSphere(swVec3(0.0f, -5000.0f, 0.0f), 5000, whiteDiffuse)); // A big sphere for the ground
+    // scene.push(swSphere(swVec3(0.0f, 0.0f, -5050.0f), 5000, whiteDiffuse)); // Back wall
+    // scene.push(swSphere(swVec3(0.0f, 5040.0f, 0.0f), 5000, whiteDiffuse));  // Ceiling
+    // scene.push(swSphere(swVec3(5020.0f, 20.0f, 0.0f), 5000, greenDiffuse)); // Green wall
+    // scene.push(swSphere(swVec3(-5020.0f, 20.0f, 0.0f), 5000, redDiffuse));  // Red wall
+
+    // TODO: Uncomment to render reflective spheres
+    // scene.push(swSphere(swVec3(7.0f, 3.0f, 0.0f), 3.0f, yellowReflective));
+    // scene.push(swSphere(swVec3(9.0f, 10.0f, 0.0f), 3.0f, yellowReflective));
+
+    // TODO: Uncomment to render refractive spheres
+    // scene.push(swSphere(swVec3(-7.0f, 3.0f, 0.0f), 3.0f, redTransparent));
+    // scene.push(swSphere(swVec3(-9.0f, 10.0f, 0.0f), 3.0f, redTransparent));
 
     // Setup camera
-    swVec3 eye(27, 17, 21);
-    swVec3 lookAt(-1, -3, 0);
-    swVec3 up(0, 1, 0);
+    swVec3 eye(0.0f, 10.0f, 30.0f);
+    swVec3 lookAt(0.0f, 10.0f, -5.0f);
+    swVec3 up(0.0f, 1.0f, 0.0f);
     swCamera camera(eye, lookAt, up, 52.0f,
                     (float)imageWidth / (float)imageHeight);
     camera.setup(imageWidth, imageHeight);
