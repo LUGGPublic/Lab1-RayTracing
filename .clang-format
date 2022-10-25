@@ -6,6 +6,7 @@ Language: Cpp
 AllowShortIfStatementsOnASingleLine: true
 ConstructorInitializerIndentWidth: 2
 ContinuationIndentWidth: 2
+ColumnLimit: 120
 IncludeCategories:
   - Regex: '^".*/'
     Priority: 2

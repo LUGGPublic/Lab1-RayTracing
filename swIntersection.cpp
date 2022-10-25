@@ -1,33 +1,36 @@
 #include "swIntersection.h"
 
-swRay swIntersection::getShadowRay(const swVec3 &lightPos) {
-    swVec3 L = lightPos - mPosition;
-    return swRay(mPosition, L.normalize(), 0.0f, 0.01f, sqrt(L * L));
+namespace sw {
+
+Ray Intersection::getShadowRay(const Vec3 &lightPos) {
+    Vec3 L = lightPos - position;
+    return Ray(position, L.normalize(), 0.01f, sqrt(L * L));
 }
 
-swRay swIntersection::getReflectedRay(void) {
-    swVec3 N = mNormal;
-    const swVec3 D = mRay.dir;
+Ray Intersection::getReflectedRay(void) {
+    Vec3 N = normal;
+    const Vec3 D = ray.dir;
 
-    // TODO: Implement reflection.
+    // TODO: Implement reflection
     // -------------------
-    swVec3 R = D;
+    Vec3 R = D;
     // -------------------
-    swRay rray = swRay(mPosition, R, 0.0f, 0.01f, FLT_MAX);
-    return rray;
+
+    return Ray(position, R, 0.01f, FLT_MAX);
 }
 
-swRay swIntersection::getRefractedRay(void) {
-    const swVec3 &D = mRay.dir;
-    swVec3 N = mNormal;
-    swVec3 O; // O : outgoing refracted vector
-    float eta = 1.0f / mMaterial.refractiveIndex;
-    if (!mFrontFacing) eta = 1.0f / eta; // Inside material.
+Ray Intersection::getRefractedRay(void) {
+    const Vec3 &D = ray.dir;
+    Vec3 N = normal;
+    float eta = 1.0f / material.refractiveIndex;
+    if (!frontFacing) eta = 1.0f / eta; // Inside material.
 
-    // TODO: Implement refraction.
+    // TODO: Implement refraction
     // -------------------
-    swVec3 R = D;
+    Vec3 R = D;
     // -------------------
 
-    return swRay(mPosition, O, 0.0f, 0.01f, FLT_MAX);
+    return Ray(position, R, 0.01f, FLT_MAX);
 }
+
+} // namespace sw

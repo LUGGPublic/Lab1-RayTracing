@@ -1,24 +1,27 @@
 #include "swCamera.h"
 
-void swCamera::setup(int w, int h) {
-    mImageWidth = w;
-    mImageHeight = h;
+namespace sw {
 
-    mForward = lookAt - origin;
-    mForward.normalize();
-    mRight = mForward % up;
-    mRight.normalize();
-    mUp = mRight % mForward;
+void Camera::setup(int w, int h) {
+    imageWidth = w;
+    imageHeight = h;
 
-    mImageExtentX = std::tan(0.5f * vFOV * static_cast<float>(M_PI) / 180.0f);
-    mImageExtentY =
-      std::tan(0.5f * vFOV / aspectRatio * static_cast<float>(M_PI) / 180.0f);
+    forward = lookAt - origin;
+    forward.normalize();
+    right = forward % up;
+    right.normalize();
+    up = right % forward;
+
+    imageExtentX = std::tan(0.5f * vFOV * static_cast<float>(M_PI) / 180.0f);
+    imageExtentY = std::tan(0.5f * vFOV / aspectRatio * static_cast<float>(M_PI) / 180.0f);
 }
 
-swRay swCamera::getRay(float x, float y) {
-    swVec3 xIncr = 2.0f / ((float)mImageWidth) * mImageExtentX * mRight;
-    swVec3 yIncr = -2.0f / ((float)mImageHeight) * mImageExtentY * mUp;
-    swVec3 view = mForward - mImageExtentX * mRight + mImageExtentY * mUp;
+Ray Camera::getRay(float x, float y) {
+    Vec3 xIncr = 2.0f / ((float)imageWidth) * imageExtentX * right;
+    Vec3 yIncr = -2.0f / ((float)imageHeight) * imageExtentY * up;
+    Vec3 view = forward - imageExtentX * right + imageExtentY * up;
 
-    return swRay(origin, view + x * xIncr + y * yIncr, 0, 0, FLT_MAX);
+    return Ray(origin, view + x * xIncr + y * yIncr, 0.0f, FLT_MAX);
 }
+
+} // namespace sw

@@ -1,16 +1,20 @@
 #include "swScene.h"
 
-bool swScene::intersect(const swRay &r, swIntersection &isect, bool any) {
+namespace sw {
+
+bool Scene::intersect(const Ray &r, Intersection &isect, bool any) {
     bool hit = false;
-    swIntersection curIsect;
-    for (auto &object : mSpheres) {
-        if (object.intersect(r, curIsect)) {
+    Intersection currIsect;
+    for (auto &primitive : primitives) {
+        if (primitive->intersect(r, currIsect)) {
             hit = true;
             if (any) return hit;
-            if (curIsect.mHitTime < isect.mHitTime) {
-                isect = curIsect;
+            if (currIsect.hitT < isect.hitT) {
+                isect = currIsect;
             }
         }
     }
     return hit;
 }
+
+} // namespace sw

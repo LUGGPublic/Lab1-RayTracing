@@ -1,17 +1,25 @@
 #pragma once
+
 #include "swIntersection.h"
-#include "swMaterial.h"
+#include "swPrimitive.h"
 #include "swRay.h"
 
-class swSphere {
+namespace sw {
+
+class Sphere : public Primitive {
   public:
-    swSphere() = default;
-    swSphere(const swVec3 &c, const float &r, const swMaterial &m)
-      : mCenter(c), mRadius(r), mMaterial(m) {}
-    bool intersect(const swRay &r, swIntersection &isect);
+    Sphere() = default;
+    Sphere(const Vec3 &c, const float &r, const Material &m) : center(c), radius(r), material(m) {}
+    Sphere(const Sphere &s) = default;
+    Sphere(Sphere &&) = default;
+    Sphere &operator=(Sphere &&) = default;
+
+    bool intersect(const Ray &r, Intersection &isect) const;
 
   public:
-    swVec3 mCenter;
-    float mRadius{0.0f};
-    swMaterial mMaterial;
+    Vec3 center;
+    float radius{0.0f};
+    Material material;
 };
+
+} // namespace sw

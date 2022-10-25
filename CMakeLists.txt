@@ -49,11 +49,14 @@ target_sources(
     [[swIntersection.cpp]]
     [[swIntersection.h]]
     [[swMaterial.h]]
+    [[swPrimitive.h]]
     [[swRay.h]]
     [[swScene.cpp]]
     [[swScene.h]]
     [[swSphere.cpp]]
     [[swSphere.h]]
+    [[swTriangle.cpp]]
+    [[swTriangle.h]]
     [[swVec3.h]]
 )
 target_compile_definitions(
@@ -67,4 +70,3 @@ target_compile_options(
   PRIVATE
     $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/utf-8;/Zc:__cplusplus>
 )
-

@@ -1,18 +1,23 @@
 #pragma once
+
 #include "swMaterial.h"
 #include "swRay.h"
 
-class swIntersection {
+namespace sw {
+
+class Intersection {
   public:
-    swRay getShadowRay(const swVec3 &lightPos);
-    swRay getReflectedRay(void);
-    swRay getRefractedRay(void);
+    Ray getShadowRay(const Vec3 &lightPos);
+    Ray getReflectedRay(void);
+    Ray getRefractedRay(void);
 
   public:
-    float mHitTime{FLT_MAX};
-    swVec3 mPosition;
-    swVec3 mNormal;
-    bool mFrontFacing{true};
-    swMaterial mMaterial;
-    swRay mRay; // incoming ray that creates intersection
+    Vec3 position;
+    Vec3 normal;
+    float hitT{FLT_MAX};
+    bool frontFacing{true};
+    Material material;
+    Ray ray; // incoming ray that creates intersection
 };
+
+} // namespace sw

@@ -1,19 +1,22 @@
 #pragma once
+
 #include "swVec3.h"
 
-class swRay {
-  public:
-    swRay() = default;
-    swRay(const swVec3 &o, const swVec3 &d, float t = 0, float nt = 0,
-          float xt = FLT_MAX)
-      : orig(o), dir(d), tm(t), minT(nt), maxT(xt) {}
+namespace sw {
 
-    swVec3 origin() const { return orig; }
-    swVec3 direction() const { return dir; }
-    float time() const { return tm; }
+class Ray {
+  public:
+    Ray() = default;
+    Ray(const Vec3 &o, const Vec3 &d, float t0 = 0.0f, float t1 = FLT_MAX) : orig(o), dir(d), minT(t0), maxT(t1) {}
+
+    Vec3 origin() const { return orig; }
+    Vec3 direction() const { return dir; }
 
   public:
-    swVec3 orig;
-    swVec3 dir;
-    float tm{0.0f}, minT{0.0f}, maxT{FLT_MAX};
+    Vec3 orig;
+    Vec3 dir;
+    float minT{0.0f};
+    float maxT{FLT_MAX};
 };
+
+} // namespace sw

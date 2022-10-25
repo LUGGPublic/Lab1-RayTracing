@@ -1,15 +1,21 @@
 #pragma once
+
 #include "swVec3.h"
 
-class swMaterial {
+namespace sw {
+
+class Material {
   public:
-    swMaterial() = default;
-    swMaterial(const swVec3 &c, float r = 0, float t = 0, float i = 1)
-      : mColor{c}, reflectivity(r), transparency(t), refractiveIndex(i) {}
+    Material() = default;
+    // color, reflectivity, transparency, refractiveIndex
+    Material(const Vec3 &c, float r = 0, float t = 0, float i = 1)
+      : color{c}, reflectivity(r), transparency(t), refractiveIndex(i) {}
 
   public:
-    swVec3 mColor;
+    Vec3 color;
     float reflectivity{0.0f};
     float transparency{0.0f};
     float refractiveIndex{1.0f};
 };
+
+} // namespace sw

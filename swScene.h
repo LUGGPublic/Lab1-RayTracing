@@ -1,13 +1,23 @@
 #pragma once
-#include "swIntersection.h"
-#include "swSphere.h"
+
+#include <memory>
 #include <vector>
 
-class swScene {
+#include "swIntersection.h"
+#include "swPrimitive.h"
+#include "swSphere.h"
+#include "swTriangle.h"
+
+namespace sw {
+
+class Scene {
   public:
-    void push(const swSphere &s) { mSpheres.push_back(s); }
-    bool intersect(const swRay &r, swIntersection &isect, bool any = false);
+    void pushSphere(const Sphere &s) { primitives.push_back(std::make_shared<Sphere>(s)); }
+    void pushTriangle(const Triangle &t) { primitives.push_back(std::make_shared<Triangle>(t)); }
+    bool intersect(const Ray &r, Intersection &isect, bool any = false);
 
   private:
-    std::vector<swSphere> mSpheres;
+    std::vector<std::shared_ptr<Primitive>> primitives;
 };
+
+} // namespace sw
