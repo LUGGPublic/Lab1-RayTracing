@@ -149,7 +149,7 @@ int main() {
 
             // Get a ray and trace it
             Ray r = camera.getRay(cx, cy);
-            pixel += traceRay(r, scene, depth);
+            pixel = traceRay(r, scene, depth);
 
             // Write pixel value to image
             writeColor((j * imageWidth + i) * numChannels, pixel, pixels);
