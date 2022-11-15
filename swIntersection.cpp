@@ -4,7 +4,8 @@ namespace sw {
 
 Ray Intersection::getShadowRay(const Vec3 &lightPos) {
     Vec3 L = lightPos - position;
-    return Ray(position, L.normalize(), 0.01f, sqrt(L * L));
+    float tMax = sqrt(L * L);
+    return Ray(position, L.normalize(), 0.01f, tMax);
 }
 
 Ray Intersection::getReflectedRay(void) {
