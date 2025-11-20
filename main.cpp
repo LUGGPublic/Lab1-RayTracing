@@ -7,8 +7,9 @@
  */
 #define _USE_MATH_DEFINES
 #include <cfloat>
+#include <chrono>
 #include <cmath>
-#include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <random>
 
@@ -26,6 +27,9 @@
 #include "swVec3.h"
 
 using namespace sw;
+
+using namespace std::literals;
+typedef std::chrono::high_resolution_clock Clock;
 
 inline float clamp(float x, float min, float max) {
     if (x < min) return min;
@@ -137,7 +141,9 @@ int main() {
     // Ray trace pixels
     int depth = 3;
     std::cout << "Rendering... ";
-    clock_t start = clock();
+
+    auto start = Clock::now();
+
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
 
@@ -156,6 +162,9 @@ int main() {
         }
     }
 
+    auto end = Clock::now();
+    const std::chrono::duration<double> time = end - start;
+
     // Save image to file
     stbi_write_png("out.png", imageWidth, imageHeight, numChannels, pixels, imageWidth * numChannels);
 
@@ -163,5 +172,5 @@ int main() {
     delete[] pixels;
 
     std::cout << "Done\n";
-    std::cout << "Time: " << (float)(clock() - start) / CLOCKS_PER_SEC << " s" << std::endl;
+    std::cout << "Time: " << time / 1s << " s" << std::endl;
 }
