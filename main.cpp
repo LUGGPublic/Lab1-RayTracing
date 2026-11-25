@@ -51,7 +51,7 @@ void writeColor(int index, Vec3 p, uint8_t *pixels) {
     }
 }
 
-Color traceRay(const Ray &r, Scene scene, int depth) {
+Color traceRay(const Ray &r, const Scene &scene, int depth) {
     Color c, directColor, reflectedColor, refractedColor;
     if (depth < 0) return c;
 

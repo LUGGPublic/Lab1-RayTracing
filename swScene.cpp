@@ -2,7 +2,7 @@
 
 namespace sw {
 
-bool Scene::intersect(const Ray &r, Intersection &isect, bool any) {
+bool Scene::intersect(const Ray &r, Intersection &isect, bool any) const {
     bool hit = false;
     Intersection currIsect;
     for (auto &primitive : primitives) {
