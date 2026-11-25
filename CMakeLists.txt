@@ -34,6 +34,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif (NOT CMAKE_BUILD_TYPE)
 set_property (CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${CMAKE_CONFIGURATION_TYPES})
 
+
 # Set up the executable.
 add_executable(raytracer)
 target_sources(
@@ -70,3 +71,10 @@ target_compile_options(
   PRIVATE
     $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/utf-8;/Zc:__cplusplus>
 )
+
+
+# Add OpenMP support if available for optional exercise.
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(raytracer PUBLIC OpenMP::OpenMP_CXX)
+endif()
